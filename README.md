@@ -1,5 +1,7 @@
 # Notes
 
-A collection of various notes I've taken.
+Notes from my University lectures.
+
+## Courses
 
 - [Economia e Organizzazione Aziendale](./economia)
