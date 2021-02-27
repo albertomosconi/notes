@@ -1,0 +1,132 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=15mm, includefoot]{geometry}
+
+\usepackage{eurosym}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\newpage\Large\bfseries}{\thesection}{1em}{}
+[\titlerule]
+
+\renewcommand*\contentsname{Contents}
+
+\setlength{\parskip}{1mm}
+\setlength{\parindent}{0em}
+
+\begin{document}
+
+\begin{titlepage}
+    
+    \vspace*{2cm}
+    
+    \begin{center}
+        \huge{\bfseries Bioinformatics Algorithms} \\[10pt]
+        \Large{Lecture Notes} \\[10pt]
+        \large{a.a. 2020/2021} \\
+    \end{center}
+    
+    \vfill
+    
+    \begin{flushleft}        
+        \large
+        \textbf{Alberto Mosconi} \\
+        \normalsize
+        Politecnico di Milano
+    \end{flushleft}
+    
+\end{titlepage}
+
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+\setcounter{page}{1}
+
+\section{Definitions}
+
+\subsection{Alphabet}
+Let $\Sigma$ be a finite set of symbols (alternatively called characters), called the alphabet. No assumption is made about the nature of the symbols.
+
+\subsection{String (or word)}
+A string over $\Sigma$ is any finite sequence of symbols from $\Sigma$. For example if $\Sigma = \{0,1\}$ then $01011$ is a string over $\Sigma$.
+
+The \textbf{length of a string \emph{S} is the number of symbols} in \emph{s} (the length of the sequence) and can be any non-negative integer. It is often denoted as $|S|$.
+
+The \textbf{empty string} is the unique string over $\Sigma$ of length 0, and is denoted as $\epsilon$.
+
+The \textbf{set of all strings over $\mathbf{\Sigma}$ of length \emph{n}} is denoted $\mathbf{\Sigma^n}$. For example , if $\Sigma = {0, 1}$, then $\Sigma^2 = \{00, 01, 10, 11\}$. Note that $\Sigma^0 = \{\epsilon\}$ for any alphabet $\Sigma$.
+
+The \textbf{set of all strings of any length over $\mathbf{\Sigma}$} is the \emph{Kleene closure} of $\Sigma$ and is denoted as $\mathbf{\Sigma^*}$. Also: 
+$$
+\Sigma^* = \bigcup_{n \in {N} \cup \{0\}} \Sigma^n
+$$
+
+The \textbf{set of all non-empty strings over $\mathbf{\Sigma}$} is denoted by $\mathbf{\Sigma^+}$
+
+\subsection{Substrings, prefixes and suffixes}
+
+A string \emph{s} is said to be a \textbf{substring} (or \emph{factor}) of \emph{t} if there exist (possibly empty) strings \emph{u} and \emph{v} such that \emph{t = usv}.
+
+Given a string \emph{t}, \textbf{suffixes} and \textbf{prefixes} are special substrings of \emph{t}.
+
+A string \emph{s} is said to be a \textbf{prefix} of \emph{t} if there exists a string \emph{u} such that \emph{t = su}. If \emph{u} is nonempty, \emph{s} is said to be a \emph{proper} prefix of \emph{t}.
+
+Simmetrically, a string \emph{s} is said to be a \textbf{suffix} of \emph{t} if there exists a string \emph{u} such that \emph{t = us}. If \emph{u} is nonempty, \emph{s} is said to be a \emph{proper} suffix of \emph{t}.
+
+\subsection{Reverse, palindrome and rotations}
+
+The \textbf{reverse} of a string is a string with the same symbols but in reverse order. For example, if \emph{s = abc} (where \emph{a}, \emph{b}, and \emph{c} are symbols of the alphabet), then the reverse of \emph{s} is \emph{cba}.
+
+A string that is the reverse of itself is called a \textbf{palindrome}, which also includes the empty string and all strings of length 1.
+
+A string \emph{s = uv} is said to be a \textbf{rotation} of \emph{t} if \emph{t = vu}. For example, if $\Sigma = \{0, 1\}$ the string \emph{0011001} is a rotation of \emph{0100110}, where \emph{u = 00110} and \emph{v = 01}.
+
+\section{Comparing strings}
+
+\subsection{Hamming distance}
+
+The \textbf{Hamming distance} between \textbf{two strings of equal length} is the \textbf{number of positions at which the corresponding symbols are different}.
+
+\begin{itemize}
+\item ``ka\emph{rol}in'' and ``ka\emph{thr}in'' $\rightarrow$ 3
+\item 10\emph{1}1\emph{1}01 and 10\emph{0}1\emph{0}01 $\rightarrow$ 2
+\end{itemize}
+
+With Hamming distance we can formalize \emph{substitutions} in biological sequences - or simply sequencing errors in which the wrong base pair is identified.
+
+\subsection{Edit distance}
+
+The \textbf{edit distance} is a way of quantifying how dissimilar two strings (e.g., words) are to one another by counting the \textbf{minimum number of operations required to transform on string into the other}.
+
+In the \emph{Levenshtein distance} (the most common), edit operations are: \textbf{removal}, \textbf{insertion}, and \textbf{substitution}.
+
+The edit distance between ``kitten'' and ``sitting'' is 3. A minimal edit script that transforms the former into the latter is:
+
+\begin{itemize}
+\item \textbf{k}itten $\rightarrow$ \textbf{s}itten (substitute \emph{s} for \emph{k})
+\item sitt\textbf{e}n $\rightarrow$ sitt\textbf{i}n (substitute \emph{i} for \emph{e})
+\item sittin $\rightarrow$ sittin\textbf{g} (insert \emph{g} at the end)
+\end{itemize}
+
+The number of solutions (sequences of operations) is infinite.
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
