@@ -48,8 +48,8 @@
 \subsection{Alphabet}
 Let $\Sigma$ be a finite set of symbols (alternatively called characters), called the alphabet. No assumption is made about the nature of the symbols.
 
-\subsection{String (or word)}
-A string over $\Sigma$ is any finite sequence of symbols from $\Sigma$. For example if $\Sigma = \{0,1\}$ then $01011$ is a string over $\Sigma$.
+\subsection{Strings}
+A string (or word) over $\Sigma$ is any finite sequence of symbols from $\Sigma$. For example if $\Sigma = \{0,1\}$ then $01011$ is a string over $\Sigma$.
 
 The \textbf{length of a string \emph{S} is the number of symbols} in \emph{s} (the length of the sequence) and can be any non-negative integer. It is often denoted as $|S|$.
 
@@ -64,23 +64,96 @@ $$
 
 The \textbf{set of all non-empty strings over $\mathbf{\Sigma}$} is denoted by $\mathbf{\Sigma^+}$
 
-\subsection{Substrings, prefixes and suffixes}
+\subsection{Subsequences}
+
+A \textbf{subsequence} of S is a string that can be \textbf{obtained by deleting any number (from 0 to n) of non-consecutive characters} from S, including S and the empty string too.
+
+\subsubsection{Let us count: subsequences}
+
+A subsequence of S can be described by a binary string B of n elements, telling us for each position i if the corresponding character is kept in the subsequence (1) or deleted (0).
+
+\begin{itemize}
+\item S = apple, B = 11010 $\rightarrow$ subsequence = apl
+\end{itemize}
+
+Thus, the \textbf{number of subsequences} corresponds to the number of binary strings of length n, hence 
+$$
+subsequences = 2^n
+$$
+
+Notice that if two subsequences produced by different choices are \textbf{identical, they will be counted twice}.
+
+\subsection{Substrings}
 
 A string \emph{s} is said to be a \textbf{substring} (or \emph{factor}) of \emph{t} if there exist (possibly empty) strings \emph{u} and \emph{v} such that \emph{t = usv}.
 
 Given a string \emph{t}, \textbf{suffixes} and \textbf{prefixes} are special substrings of \emph{t}.
 
+\subsubsection{Let us count: substrings}
+
+Given a string of length \emph{n}:
+
+\begin{itemize}
+\item We have 1 substring of length \emph{n} (starting at 1)
+\item We have 2 substrings of length \emph{n-1} (starting at 1 and 2)
+\item We have 3 substrings of length \emph{n-2} (starting at 1,2 and 3)
+\item ...
+\item We have $n-i+1$ substrings of length $i$ (starting at all positions from 1 to $n-i+1$)
+\item We have \emph{n} substrings of length 1 (starting at every position)
+\end{itemize}
+
+Plus, 1 substring of length 0.
+
+This brings the \textbf{total number of substrings} of a string of length \emph{n} to
+$$
+substrings = \sum^n_{i=1}i=\frac{n(n+1)}{2}+1
+$$
+
+\subsection{Prefixes and suffixes}
+
 A string \emph{s} is said to be a \textbf{prefix} of \emph{t} if there exists a string \emph{u} such that \emph{t = su}. If \emph{u} is nonempty, \emph{s} is said to be a \emph{proper} prefix of \emph{t}.
 
 Simmetrically, a string \emph{s} is said to be a \textbf{suffix} of \emph{t} if there exists a string \emph{u} such that \emph{t = us}. If \emph{u} is nonempty, \emph{s} is said to be a \emph{proper} suffix of \emph{t}.
 
-\subsection{Reverse, palindrome and rotations}
+\subsubsection{Let us count: prefixes and suffixes}
+
+The number of all posssible prefixes/suffixes of a string of length n is
+\begin{center}
+\emph{prefixes/suffixes} $= n + 1$
+\end{center}
+
+\textbf{n are non-empty, +1} because we include also \textbf{the empty string} as prefix/suffix.
+
+\subsection{Reverse and palindrome}
 
 The \textbf{reverse} of a string is a string with the same symbols but in reverse order. For example, if \emph{s = abc} (where \emph{a}, \emph{b}, and \emph{c} are symbols of the alphabet), then the reverse of \emph{s} is \emph{cba}.
 
 A string that is the reverse of itself is called a \textbf{palindrome}, which also includes the empty string and all strings of length 1.
 
+\subsection{Rotations and permutations}
+
 A string \emph{s = uv} is said to be a \textbf{rotation} of \emph{t} if \emph{t = vu}. For example, if $\Sigma = \{0, 1\}$ the string \emph{0011001} is a rotation of \emph{0100110}, where \emph{u = 00110} and \emph{v = 01}.
+
+\subsubsection{Let us count: rotations}
+Given a string S, with $|S| = n$, we denote \textbf{S=AB}, where \textbf{A is a prefix} substring, and \textbf{B a suffix} substring.
+
+For every possible pair A, B the string \textbf{R=BA is a rotation of S}, including S itself, that is, the case where $A=\epsilon$ and $B=S$.
+
+Since we have n different non empty suffixes B, the number of rotations is
+$$
+rotations = n
+$$
+
+It is not \emph{n + 1} because the two suffixes $B=S$ and $B=\epsilon$ produce exactly the same rotation, given by S itself.
+
+\subsubsection{Let us count: permutations}
+
+Given a string S, with $|S| = n$, the number of permutations of the characters in S is
+$$
+permutations = n!
+$$
+
+Notice that the formula does not consider the case of indentical permutations: that is, a string of \emph{n} identical characters, will have \emph{n} identical permutations.
 
 \section{Comparing strings}
 
