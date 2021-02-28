@@ -155,7 +155,7 @@ $$
 
 Notice that the formula does not consider the case of indentical permutations: that is, a string of \emph{n} identical characters, will have \emph{n} identical permutations.
 
-\section{Comparing strings}
+\section{String comparison and alignment}
 
 \subsection{Hamming distance}
 
@@ -183,6 +183,103 @@ The edit distance between ``kitten'' and ``sitting'' is 3. A minimal edit script
 \end{itemize}
 
 The number of solutions (sequences of operations) is infinite.
+
+\subsubsection{Computing the edit distance}
+
+We denote as $E(S, T)$ the edit distance between two strings \emph{S} and \emph{T}.
+
+For every string \emph{S}, $E(S, \epsilon) = |S|$, that is:
+\begin{itemize}
+\item the edit distance between a string \emph{S} and the empty string $\epsilon$ equals the length of \emph{S}.
+\item also, $E(\epsilon, \epsilon)=0$: the edit distance between two empty strings is zero.
+\end{itemize}
+
+Let $S = s_1s_2...s_n$ and $T = t_1t_2...t_m$ be two strings:
+\begin{itemize}
+\item we denote as $S(i)$ the prefix of length \emph{i} of \emph{S} $\rightarrow S(i) = s_1s_2...s_i$
+\item likewise, as $T(j)$ the prefix of length \emph{j} of \emph{T} $\rightarrow T(j) = t_1t_2...t_j$
+\end{itemize}
+\newpage
+
+Now, to compute the edit distance $E(S, T)$ between two strings \emph{S} and \emph{T}, with $|S| = n$ characters, and $|T|=m$ characters, a technique of dynamic programming is used. 
+
+We can easily calculate the edit distance of two substrings of \emph{S} and \emph{T}, with length \emph{i} and \emph{j}, if we have the edit distance of the two ``previous" substrings, that is, the substrings of length $i-1$ and $j-1$.
+
+To do so we prepare a matrix with $|S| + 1$ rows and $|T| + 1$ columns, numbered starting from 0.\\
+
+\textbf{The cell(i, j) will contain the value of the edit distance between prefixes S(i) and T(j).}
+
+We can fill the first row and first column right away since we know that $\forall i, E(S(i), \epsilon) = i$ and that $\forall j, E(T(j), \epsilon) = j$.
+
+\setlength{\tabcolsep}{18pt}
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+& \textbf{-} & \textbf{H} & \textbf{O} & \textbf{M} & \textbf{E} \\
+\hline
+\textbf{-} & 0 & 1 & 2 & 3 & 4 \\
+\hline
+\textbf{H} & 1 & & & & \\
+\hline
+\textbf{O} & 2 & & & & \\
+\hline
+\textbf{U} & 3 & & & & \\
+\hline
+\textbf{S} & 4 & & & & \\
+\hline
+\textbf{E} & 5 & & & & \\
+\hline
+\end{tabular}
+\end{center}
+
+Now, the value of each cell can be calculated with this formula.
+
+$$
+E(S(i), T(j)) = \min \left\{\begin{array}{rcl}
+E(S(i), T(j-1)) + 1 \\ 
+E(S(i-1), T(j)) + 1 \\
+E(S(i-1), T(j-1)) & \mbox{if} & s_i = t_j \\
+E(S(i-1), T(j-1)) +1 & \mbox{if} & s_i \neq t_j \\
+\end{array}
+\right.
+$$
+
+That is, \textbf{the edit distance between $\mathbf{S(i)}$ and $\mathbf{T(j)}$ depends on the edit distances computed for their prefixes}.
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+& \textbf{-} & \textbf{H} & \textbf{O} & \textbf{M} & \textbf{E} \\
+\hline
+\textbf{-} & 0 & 1 & 2 & 3 & 4 \\
+\hline
+\textbf{H} & 1 & 0 & 1 & 2 & 3 \\
+\hline
+\textbf{O} & 2 & 1 & 0 & 1 & 2 \\
+\hline
+\textbf{U} & 3 & 2 & 1 & 1 & 2 \\
+\hline
+\textbf{S} & 4 & 3 & 2 & 2 & 2 \\
+\hline
+\textbf{E} & 5 & 4 & 3 & 3 & 2 \\
+\hline
+\end{tabular}
+\end{center}
+
+Every cell M(i, j) contains the edit distance between prefixes S(i) and T(j). \textbf{Cell M(n, m) contains the edit distance between S(n) and T(m), that is E(S, T)}.
+
+\subsubsection{Computational complexity of edit distance}
+
+The table has $(n + 1) x (m + 1)$ cells to be filled, hence
+$$
+\mbox{\textbf{space complexity }} \mathbf{= \Theta(nm)}
+$$
+
+For every cell, the time required for the computation is constant (i.e. does not depend on the size of input strings), hence, the algorithm performs $(n+1)x(m+1)$ steps of constant time. Thus
+$$
+\mbox{\textbf{time complexity }} \mathbf{= \Theta(nm)}
+$$
 
 \end{document}
 
