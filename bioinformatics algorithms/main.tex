@@ -7,10 +7,22 @@
 \usepackage{tikz}
 \usetikzlibrary{tikzmark}
 
+\usepackage{hyperref}
+\hypersetup{
+	linktoc=all,
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=blue,
+	pdftitle={Bioinformatics Algorithms Notes},
+	bookmarks=true
+}
+
 \usepackage{titlesec}
 \titleformat{\section}
 {\newpage\Large\bfseries}{\thesection}{1em}{}
 [\titlerule]
+
+\usepackage{bm}
 
 \renewcommand*\contentsname{Contents}
 
@@ -158,7 +170,7 @@ $$
 
 Notice that the formula does not consider the case of indentical permutations: that is, a string of \emph{n} identical characters, will have \emph{n} identical permutations.
 
-\section{String comparison}
+\section{Comparison}
 
 \subsection{Hamming distance}
 
@@ -173,7 +185,7 @@ With Hamming distance we can formalize \emph{substitutions} in biological sequen
 
 \subsection{Edit distance}
 
-The \textbf{edit distance} is a way of quantifying how dissimilar two strings (e.g., words) are to one another by counting the \textbf{minimum number of operations required to transform on string into the other}.
+The \textbf{edit distance} is a way of \textbf{quantifying how dissimilar} two strings (e.g., words) are to one another by counting the \textbf{minimum number of operations required to transform on string into the other}.
 
 In the \emph{Levenshtein distance} (the most common), edit operations are: \textbf{removal}, \textbf{insertion}, and \textbf{substitution}.
 
@@ -278,7 +290,7 @@ $$
 \mbox{\textbf{space complexity }} \mathbf{= \Theta(nm)}
 $$
 
-For every cell, the time required for the computation is constant (i.e. does not depend on the size of input strings), hence, the algorithm performs $(n+1)x(m+1)$ steps of constant time. Thus
+For every cell, the time required for the computation is constant (i.e. does not depend on the size of input strings), hence, the algorithm performs $(n+1)\times(m+1)$ steps of constant time. Thus
 $$
 \mbox{\textbf{time complexity }} \mathbf{= \Theta(nm)}
 $$
@@ -371,10 +383,93 @@ S - - U N D A Y \\
 S A T U R D A Y
 \end{center}
 
+\subsubsection{Computational complexity of backtracking}
+
+The number of ``backtracking steps'' will equal the number of columns of the final alignment. \textbf{Each step takes constant time} (just follow a pointer and read the letters needed), so the worst-case number of steps corresponds to the maximum number of columns that one alignment of strings of length $|S|=n$ and $|T|=m$ can have. This means:
+$$\mbox{\textbf{space complexity }} \mathbf{= \Theta(n+m)}$$
+$$\mbox{\textbf{time complexity }} \mathbf{= \Theta(n+m)}$$
+
 \subsubsection{Weighted edit distance}
+
+The edit distance algorithm can be generalized by giving different ``weights'' to the various operations. By doing so a more general formula is obtained:
+$$
+E(S(i), T(j)) = \min \left\{\begin{array}{rcl}
+E(S(i), T(j-1)) + \mathbf{w_{id}} \\ 
+E(S(i-1), T(j)) + \mathbf{w_{id}} \\
+E(S(i-1), T(j-1)) & \mbox{if} & s_i = t_j \\
+E(S(i-1), T(j-1)) + \mathbf{w(s_i, t_j)} & \mbox{if} & s_i \neq t_j \\
+\end{array}
+\right.
+$$
+\begin{itemize}
+\item $\mathbf{w_{id}}$ represents the weight of an insertion or deletion of a character.
+\item $\mathbf{w(s_i, t_j)}$ represents the weight of substitution of the character $s_i$ with $t_j$. This means that we can prepare a ``weight matrix'' with the weight for every pair of characters of the alphabet $\Sigma$ we use.
+\end{itemize}
 
 \subsection{Longest Common Subsequence}
 
+We have seen the edit distance as a way to measure the dissimilarity of two strings S and T, now we want to evaluate their similarity. One solution is to find the \textbf{longest common subsequence (LCS)} between S and T. The longest this common subsequence is, the more similar the two strings are.
+
+The algorithm to solve this problem, similarly to the edit distance, makes use of dynamic programming principles.
+
+\subsubsection{Computing the LCS}
+
+We denote \emph{LCS(S, T)} as the length of the longest common subsequence between two strings \emph{S} and \emph{T}, having $|S|=n$ and $|T|=m$, and \emph{S(i)} the prefix of length \emph{i} of \emph{S} and \emph{T(j)} the prefix of length \emph{j} of \emph{T}.
+
+Also, given the empty string $\varepsilon$, for every string \emph{S}, we have $\mathbf{LCS(\bm\varepsilon, S)=0}$.
+
+We can now build a similar table to that in the edit distance algorithm, but changing the formula to calculate the values in each cell.
+$$
+E(S(i), T(j)) = \bm{\max} \left\{\begin{array}{rcl}
+E(S(i), T(j-1)) + \textbf{0} \\ 
+E(S(i-1), T(j)) + \textbf{0} \\
+E(S(i-1), T(j-1)) + \textbf{1} & \mbox{if} & s_i = t_j \\
+E(S(i-1), T(j-1)) + \textbf{0} & \mbox{if} & s_i \neq t_j \\
+\end{array}
+\right.
+$$
+
+\textbf{Note that ``min'' has become ``max'':} we are looking for the LCS of \textbf{maximum} length, instead of the \textbf{minimum} set of edit operations.
+
+As before, we also keep track of the path as the table is built.
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+& \textbf{-} & \textbf{H} & \textbf{O} & \textbf{M} & \textbf{E} \\
+\hline
+\textbf{-} & \cellcolor[gray]{0.9}\tabel{0}{0} & \tabel{0}{1} & \tabel{0}{2} & \tabel{0}{3} & \tabel{0}{4} \\
+\hline
+\textbf{H} & \tabel{0}{5} & \cellcolor[gray]{0.9}\tabel{1}{6} & \tabel{1}{7} & \tabel{1}{8} & \tabel{1}{9} \\
+\hline
+\textbf{O} & \tabel{0}{10} & \tabel{1}{11} & \cellcolor[gray]{0.9}\tabel{2}{12} & \tabel{2}{13} & \tabel{2}{14} \\
+\hline
+\textbf{U} & \tabel{0}{15} & \tabel{1}{16} & \tabel{2}{17} & \cellcolor[gray]{0.9}\tabel{2}{18} & \tabel{2}{19} \\
+\hline
+\textbf{S} & \tabel{0}{20} & \tabel{1}{21} & \tabel{2}{22} & \cellcolor[gray]{0.9}\tabel{2}{23} & \tabel{2}{24} \\
+\hline
+\textbf{E} & \tabel{0}{25} & \tabel{1}{26} & \tabel{2}{27} & \tabel{2}{28} & \cellcolor[gray]{0.9}\tabel{3}{29} \\
+\hline
+\end{tabular}
+\begin{tikzpicture}[overlay, remember picture, shorten >=.5pt, shorten <=.5pt, transform canvas={yshift=.25\baselineskip}, thick]
+	\tabln{29}{23}
+	\draw [->]({pic cs:23l}) to ({pic cs:18l});
+	\tabln{18}{12}
+	\tabln{12}{6}
+	\tabln{6}{0}
+\end{tikzpicture}
+\end{center}
+
+In order to reconstruct the actual LCS we again start from the bottom right and move back following the pointers.
+
+We add a letter to the LCS only when a \textbf{diagonal move} is made \textbf{and the letters match}. In the above example:
+\begin{itemize}
+\item \textbf{E, E $\rightarrow$ M, S:} diagonal move, letters match so LCS is now ``E''.
+\item \textbf{M, S $\rightarrow$ M, U:} vertical move, do nothing.
+\item \textbf{M, U $\rightarrow$ O, O:} diagonal move, letters don't match, do nothing.
+\item \textbf{O, O $\rightarrow$ H, H:} diagonal move, letters match, LCS becomes ``OE''.
+\item \textbf{H, H $\rightarrow$ -, -:} diagonal move, letters match, LCS is now ``HOE''.
+\end{itemize}
 
 \section{Alignment}
 
