@@ -22,13 +22,20 @@
 {\newpage\Large\bfseries}{\thesection}{1em}{}
 [\titlerule]
 
-\usepackage{bm}
-
 \renewcommand*\contentsname{Contents}
 
 \setlength{\parskip}{1mm}
 \setlength{\parindent}{0em}
 
+
+\setlength{\tabcolsep}{18pt}
+\renewcommand{\arraystretch}{1.5}
+\newcommand{\tabel}[2]
+{\tikzmark{#2l} #1 \tikzmark{#2r}}
+\newcommand{\tabln}[2]
+{\draw [->]({pic cs:#1l}) to ({pic cs:#2r});}
+
+\usepackage{bm}
 \usepackage{subfiles}
 
 \begin{document}

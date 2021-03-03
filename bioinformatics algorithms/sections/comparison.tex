@@ -1,15 +1,4 @@
-\documentclass[12pt, letterpaper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[margin=15mm, includefoot]{geometry}
-
-\usepackage{colortbl}
-\usepackage{tikz}
-\usetikzlibrary{tikzmark}
-
-\usepackage{bm}
-
-\setlength{\parskip}{1mm}
-\setlength{\parindent}{0em}
+\documentclass[../main.tex]{subfiles}
 
 \begin{document}
 
@@ -69,8 +58,6 @@ To do so we prepare a matrix with $|S| + 1$ rows and $|T| + 1$ columns, numbered
 
 We can fill the first row and first column right away since we know that $\forall i, E(S(i), \varepsilon) = i$ and that $\forall j, E(T(j), \varepsilon) = j$.
 
-\setlength{\tabcolsep}{18pt}
-\renewcommand{\arraystretch}{1.5}
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
@@ -144,10 +131,6 @@ Once the table has been built, and the edit distance between the two strings has
 
 To allow this, during the creation of the matrix, every time each cell is filled we \textbf{not only save the score value, but also which of the 3 previous cells had the minimum value}.
 
-\newcommand{\tabel}[2]
-{\tikzmark{#2l} #1 \tikzmark{#2r}}
-\newcommand{\tabln}[2]
-{\draw [->]({pic cs:#1l}) to ({pic cs:#2r});}
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
@@ -222,8 +205,8 @@ In the case of the example above the sequence of moves and the corresponding ope
 We can shorten this representation like so:
 \begin{center}
 \tt 
-S - - U N D A Y \\
-S A T U R D A Y
+H O M - E \\
+H O U S E
 \end{center}
 
 \subsubsection{Computational complexity of backtracking}
