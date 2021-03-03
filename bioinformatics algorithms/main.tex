@@ -3,6 +3,9 @@
 \usepackage[margin=15mm, includefoot]{geometry}
 
 \usepackage{eurosym}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
 
 \usepackage{titlesec}
 \titleformat{\section}
@@ -53,9 +56,9 @@ A string (or word) over $\Sigma$ is any finite sequence of symbols from $\Sigma$
 
 The \textbf{length of a string \emph{S} is the number of symbols} in \emph{s} (the length of the sequence) and can be any non-negative integer. It is often denoted as $|S|$.
 
-The \textbf{empty string} is the unique string over $\Sigma$ of length 0, and is denoted as $\epsilon$.
+The \textbf{empty string} is the unique string over $\Sigma$ of length 0, and is denoted as $\varepsilon$.
 
-The \textbf{set of all strings over $\mathbf{\Sigma}$ of length \emph{n}} is denoted $\mathbf{\Sigma^n}$. For example , if $\Sigma = {0, 1}$, then $\Sigma^2 = \{00, 01, 10, 11\}$. Note that $\Sigma^0 = \{\epsilon\}$ for any alphabet $\Sigma$.
+The \textbf{set of all strings over $\mathbf{\Sigma}$ of length \emph{n}} is denoted $\mathbf{\Sigma^n}$. For example , if $\Sigma = {0, 1}$, then $\Sigma^2 = \{00, 01, 10, 11\}$. Note that $\Sigma^0 = \{\varepsilon\}$ for any alphabet $\Sigma$.
 
 The \textbf{set of all strings of any length over $\mathbf{\Sigma}$} is the \emph{Kleene closure} of $\Sigma$ and is denoted as $\mathbf{\Sigma^*}$. Also: 
 $$
@@ -137,14 +140,14 @@ A string \emph{s = uv} is said to be a \textbf{rotation} of \emph{t} if \emph{t 
 \subsubsection{Let us count: rotations}
 Given a string S, with $|S| = n$, we denote \textbf{S=AB}, where \textbf{A is a prefix} substring, and \textbf{B a suffix} substring.
 
-For every possible pair A, B the string \textbf{R=BA is a rotation of S}, including S itself, that is, the case where $A=\epsilon$ and $B=S$.
+For every possible pair A, B the string \textbf{R=BA is a rotation of S}, including S itself, that is, the case where $A=\varepsilon$ and $B=S$.
 
 Since we have n different non empty suffixes B, the number of rotations is
 $$
 rotations = n
 $$
 
-It is not \emph{n + 1} because the two suffixes $B=S$ and $B=\epsilon$ produce exactly the same rotation, given by S itself.
+It is not \emph{n + 1} because the two suffixes $B=S$ and $B=\varepsilon$ produce exactly the same rotation, given by S itself.
 
 \subsubsection{Let us count: permutations}
 
@@ -155,7 +158,7 @@ $$
 
 Notice that the formula does not consider the case of indentical permutations: that is, a string of \emph{n} identical characters, will have \emph{n} identical permutations.
 
-\section{String comparison and alignment}
+\section{String comparison}
 
 \subsection{Hamming distance}
 
@@ -188,10 +191,10 @@ The number of solutions (sequences of operations) is infinite.
 
 We denote as $E(S, T)$ the edit distance between two strings \emph{S} and \emph{T}.
 
-For every string \emph{S}, $E(S, \epsilon) = |S|$, that is:
+For every string \emph{S}, $E(S, \varepsilon) = |S|$, that is:
 \begin{itemize}
-\item the edit distance between a string \emph{S} and the empty string $\epsilon$ equals the length of \emph{S}.
-\item also, $E(\epsilon, \epsilon)=0$: the edit distance between two empty strings is zero.
+\item the edit distance between a string \emph{S} and the empty string $\varepsilon$ equals the length of \emph{S}.
+\item also, $E(\varepsilon, \varepsilon)=0$: the edit distance between two empty strings is zero.
 \end{itemize}
 
 Let $S = s_1s_2...s_n$ and $T = t_1t_2...t_m$ be two strings:
@@ -209,14 +212,14 @@ To do so we prepare a matrix with $|S| + 1$ rows and $|T| + 1$ columns, numbered
 
 \textbf{The cell(i, j) will contain the value of the edit distance between prefixes S(i) and T(j).}
 
-We can fill the first row and first column right away since we know that $\forall i, E(S(i), \epsilon) = i$ and that $\forall j, E(T(j), \epsilon) = j$.
+We can fill the first row and first column right away since we know that $\forall i, E(S(i), \varepsilon) = i$ and that $\forall j, E(T(j), \varepsilon) = j$.
 
 \setlength{\tabcolsep}{18pt}
 \renewcommand{\arraystretch}{1.5}
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
-& \textbf{-} & \textbf{H} & \textbf{O} & \textbf{M} & \textbf{E} \\
+& \texttt{-} & \textbf{H} & \textbf{O} & \textbf{M} & \textbf{E} \\
 \hline
 \textbf{-} & 0 & 1 & 2 & 3 & 4 \\
 \hline
@@ -234,7 +237,6 @@ We can fill the first row and first column right away since we know that $\foral
 \end{center}
 
 Now, the value of each cell can be calculated with this formula.
-
 $$
 E(S(i), T(j)) = \min \left\{\begin{array}{rcl}
 E(S(i), T(j-1)) + 1 \\ 
@@ -262,7 +264,7 @@ That is, \textbf{the edit distance between $\mathbf{S(i)}$ and $\mathbf{T(j)}$ d
 \hline
 \textbf{S} & 4 & 3 & 2 & 2 & 2 \\
 \hline
-\textbf{E} & 5 & 4 & 3 & 3 & 2 \\
+\textbf{E} & 5 & 4 & 3 & 3 & \cellcolor[gray]{0.9}2 \\
 \hline
 \end{tabular}
 \end{center}
@@ -280,6 +282,118 @@ For every cell, the time required for the computation is constant (i.e. does not
 $$
 \mbox{\textbf{time complexity }} \mathbf{= \Theta(nm)}
 $$
+
+\subsubsection{Traceback}
+
+Once the table has been built, and the edit distance between the two strings has been computed, one may want to know the exact sequence of operations (insertions, deletions and substitutions) that transform the first string into the second.
+
+To allow this, during the creation of the matrix, every time each cell is filled we \textbf{not only save the score value, but also which of the 3 previous cells had the minimum value}.
+
+\newcommand{\tabel}[2]
+{\tikzmark{#2l} #1 \tikzmark{#2r}}
+\newcommand{\tabln}[2]
+{\draw [->]({pic cs:#1l}) to ({pic cs:#2r});}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+& \textbf{-} & \textbf{H} & \textbf{O} & \textbf{M} & \textbf{E} \\
+\hline
+\textbf{-} & \cellcolor[gray]{0.9}\tabel{0}{0} & \tabel{1}{1} & \tabel{2}{2} & \tabel{3}{3} & \tabel{4}{4} \\
+\hline
+\textbf{H} & \tabel{1}{5} & \cellcolor[gray]{0.9}\tabel{0}{6} & \tabel{1}{7} & \tabel{2}{8} & \tabel{3}{9} \\
+\hline
+\textbf{O} & \tabel{2}{10} & \tabel{1}{11} & \cellcolor[gray]{0.9}\tabel{0}{12} & \tabel{1}{13} & \tabel{2}{14} \\
+\hline
+\textbf{U} & \tabel{3}{15} & \tabel{2}{16} & \tabel{1}{17} & \cellcolor[gray]{0.9}\tabel{1}{18} & \tabel{2}{19} \\
+\hline
+\textbf{S} & \tabel{4}{20} & \tabel{3}{21} & \tabel{2}{22} & \cellcolor[gray]{0.9}\tabel{2}{23} & \tabel{2}{24} \\
+\hline
+\textbf{E} & \tabel{5}{25} & \tabel{4}{26} & \tabel{3}{27} & \tabel{3}{28} & \cellcolor[gray]{0.9}\tabel{2}{29} \\
+\hline
+\end{tabular}
+\begin{tikzpicture}[overlay, remember picture, shorten >=.5pt, shorten <=.5pt, transform canvas={yshift=.25\baselineskip}, thick]
+	\tabln{1}{0}
+	\tabln{2}{1}
+	\tabln{3}{2}
+	\tabln{4}{3}
+	\draw [->]({pic cs:5l}) to ({pic cs:0l});
+	\draw [->]({pic cs:10l}) to ({pic cs:5l});
+	\draw [->]({pic cs:15l}) to ({pic cs:10l});
+	\draw [->]({pic cs:20l}) to ({pic cs:15l});
+	\draw [->]({pic cs:25l}) to ({pic cs:20l});
+	\draw [->]({pic cs:11l}) to ({pic cs:6l});
+	\tabln{7}{6}
+	\tabln{8}{7}
+	\tabln{9}{8}
+	\tabln{12}{6}
+	\draw [->]({pic cs:16l}) to ({pic cs:11l});
+	\draw [->]({pic cs:21l}) to ({pic cs:16l});
+	\draw [->]({pic cs:26l}) to ({pic cs:21l});
+	\tabln{6}{0}
+	\tabln{13}{12}
+	\tabln{14}{13}
+	\tabln{18}{12}
+	\draw [->]({pic cs:17l}) to ({pic cs:12l});
+	\tabln{24}{18}
+	\tabln{19}{18}
+	\draw [->]({pic cs:22l}) to ({pic cs:17l});
+	\draw [->]({pic cs:23l}) to ({pic cs:18l});
+	\draw [->]({pic cs:27l}) to ({pic cs:22l});
+	\draw [->]({pic cs:28l}) to ({pic cs:23l});
+	\tabln{29}{23}
+\end{tikzpicture}
+\end{center}
+
+Now, if we \textbf{start from the final cell}, we can follow the pointers until we reach the top-left corner and deduce the sequence of edit operations from the type of moves that form the path.
+\begin{itemize}
+\item \textbf{Diagonal move}: when the path makes a diagonal move there are two possibilities, depending on whether the characters that identify the start cell match or not:
+	\begin{itemize}
+	\item if they are \textbf{the same}, \textbf{no operation} is applied.
+	\item if they \textbf{don't match}, a \textbf{substitution} takes place.
+	\end{itemize}
+\item \textbf{Vertical move}: during a vertical move an \textbf{insertion} takes place: the current character of the second string is inserted into the first string.
+\item \textbf{Horizontal move}: when a horizontal move occurs a character is \textbf{deleted} from the first string.
+\end{itemize}
+
+In the case of the example above the sequence of moves and the corresponding operations are:
+\begin{enumerate}
+\item \textbf{E, E $\rightarrow$ M, S:} diagonal move, E is equal to E so \textbf{no operation}.
+\item \textbf{M, S $\rightarrow$ M, U:} vertical move, M and S don't match so \textbf{S is inserted in the first string}.
+\item \textbf{M, U $\rightarrow$ O, O:} diagonal move, M and U don't match so \textbf{M is substituted with U}.
+\item \textbf{O, O $\rightarrow$ H, H:} diagonal move, O is equal to O, so \textbf{no operation}.
+\item \textbf{H, H $\rightarrow$ -, -:} diagonal move, H is equal to H, so \textbf{no operation}.
+\end{enumerate}
+
+We can shorten this representation like so:
+\begin{center}
+\tt 
+S - - U N D A Y \\
+S A T U R D A Y
+\end{center}
+
+\subsubsection{Weighted edit distance}
+
+\subsection{Longest Common Subsequence}
+
+
+\section{Alignment}
+
+\subsection{Global alignment}
+
+\subsection{Local alignment}
+
+\section{Pattern matching}
+
+\subsection{Exact pattern matching}
+
+\subsubsection{The naive approach}
+
+\subsubsection{Knuth-Morris-Pratt algorithm}
+
+
+
+
+
 
 \end{document}
 
