@@ -108,6 +108,75 @@ The simplest substitution matrices are the ones used for DNA/RNA sequences. The 
 
 \subsection{Local alignment}
 
+DNA and the related molecules (RNA, proteins) evolve at different speeds, so in a genome, some regions tend to be more conserved by evolution than others. This means that, in several cases, an \textbf{evolutionary relationship can be found only for a part of the sequences} compared, but not for them globally.
+
+This is the problem of local alignment: \textbf{find the two substrings, one from S and the other from T, that produce the alignment with the maximum score}.
+
+Notice that: since \textbf{negative scores are possible}, if there is no pair of substrings with an alignment with score $> 0$, then the best solution is trivially given by two empty strings with score 0.
+
+Notice also that if we had only positive or null scores, then the best solution would be the alignment of the two whole strings.
+
+\subsubsection{Smith Waterman algorithm}
+
+This algorithm was designed explicitely for the comparison of biological sequences and \textbf{guarantees to find the best (optimal) solution}, and is based again on the dynamic programming matrix.
+
+We start by building a table with $(n+1)\times(m+1)$ cells as in the global alignment.
+
+Cell (i, j) will contain the score of the alignment of a substring ending at i in S and a substring ending at j in T. From this we can already fill the first row and the first column with zeros since \textbf{the best possible score between an empty string and any other string is 0}.
+
+The formula for filling each cell is similar to all the others.
+$$
+M(i, j) = \max \left\{\begin{array}{rcl}
+&\mathbf{0} \\
+&M(i, j-1) + g \\ 
+&M(i-1, j) + g \\
+&M(i-1, j-1) + \sigma(s_i, t_j) \\
+\end{array}
+\right.
+$$
+
+The main different is that when computing the cell value, \textbf{if all the possible alignment extensions lead to a negative score, it's better to ``reset'' everything and start from 0 again}.
+
+Also, \textbf{pointers are not saved for cells with a value of 0}.
+
+In the following example we set $g=-2$ (insertions, deletions), $\sigma(a_i, a_j)=-1$ for every \emph{i, j} (mismatch), $\sigma(a_k, a_k)=1$ for every \emph{i} (match).
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+& \textbf{-} & \textbf{H} & \textbf{O} & \textbf{M} & \textbf{E} \\
+\hline
+\textbf{-} & \cellcolor[gray]{0.9}\tabel{0}{60} & \tabel{0}{61} & \tabel{0}{62} & \tabel {0}{63} & \tabel{0}{64} \\
+\hline
+\textbf{H} & \tabel{0}{65} & \cellcolor[gray]{0.9}\tabel{1}{66} & \tabel{0}{67} & \tabel{0}{68} & \tabel{0}{69} \\
+\hline
+\textbf{O} & \tabel{0}{70} & \tabel{0}{71} & \cellcolor[gray]{0.9}\tabel{2}{72} & \tabel{0}{73} & \tabel{0}{74} \\
+\hline
+\textbf{U} & \tabel{0}{75} & \tabel{0}{76} & \tabel{0}{77} & \tabel{1}{78} & \tabel{0}{79} \\
+\hline
+\textbf{S} & \tabel{0}{80} & \tabel{0}{81} & \tabel{0}{82} & \tabel{0}{83} & \tabel{0}{84} \\
+\hline
+\textbf{E} & \tabel{0}{85} & \tabel{0}{86} & \tabel{0}{87} & \tabel{0}{88} & \tabel{1}{89} \\
+\hline
+\end{tabular}
+\begin{tikzpicture}[overlay, remember picture, shorten >=.5pt, shorten <=.5pt, transform canvas={yshift=.25\baselineskip}, thick]
+	\tabln{89}{83}
+	\tabln{78}{72}
+	\tabln{72}{66}
+	\tabln{66}{60}
+\end{tikzpicture}
+\end{center}
+
+The \textbf{traceback} process \textbf{doesn't start from the bottom right cell}, but instead it \textbf{starts from the cell with the maximum score}, and follows the paths back until a cell with a score of 0, then it stops.
+
+For the above example, the two substrings that produce the highest alignment score are
+\begin{center}
+\tt
+H O\\
+H O
+\end{center}
+
+Once we have found, traced back, and aligned the best pair of strings, we can iterate the process finding the ``second best'' score in cells that haven't been used previously. And then the third, fourth, and so on (remember that the algorithm can be applied to sequences of hundreds or thousands of nucleotides/aminoacids).
+
 \end{document}
 
 
