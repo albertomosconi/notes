@@ -1,6 +1,6 @@
 # Notes
 
-Notes from my University lectures.
+## Terzo Anno
 
-- [Bioinformatics Algorithms](./bioinformatics%20algorithms)
-- [Economia e Organizzazione Aziendale](./economia)
+- [Bioinformatics Algorithms](./bioinformatics%20algorithms) - Prof. Giulio Pavesi
+- [Economia e Organizzazione Aziendale](./economia) - Prof. Massimiliano Guerini
