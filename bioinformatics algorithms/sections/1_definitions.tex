@@ -16,9 +16,9 @@ The \textbf{empty string} is the unique string over $\Sigma$ of length 0, and is
 
 The \textbf{set of all strings over $\mathbf{\Sigma}$ of length \emph{n}} is denoted $\mathbf{\Sigma^n}$. For example , if $\Sigma = {0, 1}$, then $\Sigma^2 = \{00, 01, 10, 11\}$. Note that $\Sigma^0 = \{\varepsilon\}$ for any alphabet $\Sigma$.
 
-The \textbf{set of all strings of any length over $\mathbf{\Sigma}$} is the \emph{Kleene closure} of $\Sigma$ and is denoted as $\mathbf{\Sigma^*}$. Also: 
+The \textbf{set of all strings of any length over $\mathbf{\Sigma}$} is the \emph{Kleene closure} of $\Sigma$ and is denoted as $\mathbf{\Sigma^*}$. Also:
 $$
-\Sigma^* = \bigcup_{n \in {N} \cup \{0\}} \Sigma^n
+    \Sigma^* = \bigcup_{n \in {N} \cup \{0\}} \Sigma^n
 $$
 
 The \textbf{set of all non-empty strings over $\mathbf{\Sigma}$} is denoted by $\mathbf{\Sigma^+}$
@@ -32,12 +32,12 @@ A \textbf{subsequence} of S is a string that can be \textbf{obtained by deleting
 A subsequence of S can be described by a binary string B of n elements, telling us for each position i if the corresponding character is kept in the subsequence (1) or deleted (0).
 
 \begin{itemize}
-\item S = apple, B = 11010 $\rightarrow$ subsequence = apl
+    \item S = apple, B = 11010 $\rightarrow$ subsequence = apl
 \end{itemize}
 
-Thus, the \textbf{number of subsequences} corresponds to the number of binary strings of length n, hence 
+Thus, the \textbf{number of subsequences} corresponds to the number of binary strings of length n, hence
 $$
-subsequences = 2^n
+    subsequences = 2^n
 $$
 
 Notice that if two subsequences produced by different choices are \textbf{identical, they will be counted twice}.
@@ -53,19 +53,19 @@ Given a string \emph{t}, \textbf{suffixes} and \textbf{prefixes} are special sub
 Given a string of length \emph{n}:
 
 \begin{itemize}
-\item We have 1 substring of length \emph{n} (starting at 1)
-\item We have 2 substrings of length \emph{n-1} (starting at 1 and 2)
-\item We have 3 substrings of length \emph{n-2} (starting at 1,2 and 3)
-\item ...
-\item We have $n-i+1$ substrings of length $i$ (starting at all positions from 1 to $n-i+1$)
-\item We have \emph{n} substrings of length 1 (starting at every position)
+    \item We have 1 substring of length \emph{n} (starting at 1)
+    \item We have 2 substrings of length \emph{n-1} (starting at 1 and 2)
+    \item We have 3 substrings of length \emph{n-2} (starting at 1,2 and 3)
+    \item ...
+    \item We have $n-i+1$ substrings of length $i$ (starting at all positions from 1 to $n-i+1$)
+    \item We have \emph{n} substrings of length 1 (starting at every position)
 \end{itemize}
 
 Plus, 1 substring of length 0.
 
 This brings the \textbf{total number of substrings} of a string of length \emph{n} to
 $$
-substrings = \sum^n_{i=1}i=\frac{n(n+1)}{2}+1
+    substrings = \sum^n_{i=1}i=\frac{n(n+1)}{2}+1
 $$
 
 \subsection{Prefixes and suffixes}
@@ -78,7 +78,7 @@ Simmetrically, a string \emph{s} is said to be a \textbf{suffix} of \emph{t} if 
 
 The number of all posssible prefixes/suffixes of a string of length n is
 \begin{center}
-\emph{prefixes/suffixes} $= n + 1$
+    \emph{prefixes/suffixes} $= n + 1$
 \end{center}
 
 \textbf{n are non-empty, +1} because we include also \textbf{the empty string} as prefix/suffix.
@@ -100,7 +100,7 @@ For every possible pair A, B the string \textbf{R=BA is a rotation of S}, includ
 
 Since we have n different non empty suffixes B, the number of rotations is
 $$
-rotations = n
+    rotations = n
 $$
 
 It is not \emph{n + 1} because the two suffixes $B=S$ and $B=\varepsilon$ produce exactly the same rotation, given by S itself.
@@ -109,7 +109,7 @@ It is not \emph{n + 1} because the two suffixes $B=S$ and $B=\varepsilon$ produc
 
 Given a string S, with $|S| = n$, the number of permutations of the characters in S is
 $$
-permutations = n!
+    permutations = n!
 $$
 
 Notice that the formula does not consider the case of indentical permutations: that is, a string of \emph{n} identical characters, will have \emph{n} identical permutations.
