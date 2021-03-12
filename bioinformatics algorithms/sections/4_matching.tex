@@ -3,10 +3,24 @@
 \begin{document}
 \section{Pattern matching}
 
+The alignment algorithms shown above are very powerful and widely used. But what if we want to align a sequence with a genome, and repeat the process for thousands or ever hundreds of millions of sequences (\textbf{RNA or sequencing read mapping}? This could be solved with the previous algorithms but it would be slow and not very optimized.
+
+In general, we want to find a place where one or more \emph{strings} (also called patterns) are found within a larger string or text. The mapping should consider "approximate" matching, due to sequencing errors or biological variations.
+
 \subsection{Exact pattern matching}
+Let's give a formal definition of the problem of exact pattern matching.
+\begin{itemize}
+    \item Let P (pattern) and S (string, or the text, or the genome) be two strings over the same alphabet $\sum$, e.g. $\sum = \{A, C, G , T\}$.
 
-\subsubsection{The naive approach}
+    \item Let $|P|=m$ and $|S|=n$.
+    \item \textbf{Let $\bm S^i$ the substring of length \emph{m} of \emph{S} starting at position \emph{i}.}
+\end{itemize}
 
-\subsubsection{Knuth-Morris-Pratt algorithm}
+We want to find a few things:
+\begin{itemize}
+    \item If there exist at least on $S^i$ such that $P = S^i$.
+    \item How many $i, 1 \leq i \leq n -m + 1$, are there such that $P=S^i$ (how many positions).
+    \item The list of all $i, 1 \leq i \leq n -m + 1$, such that $P=S^i$ (report all matching positions for \emph{P} in \emph{S}).
+\end{itemize}
 
 \end{document}
