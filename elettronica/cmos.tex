@@ -1,0 +1,54 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=15mm]{geometry}
+
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0em}
+
+\begin{document}
+
+\section{NMOS}
+$\mathbf{V_{GS} > V_T \Rightarrow ACCESO}$
+
+\subsection{Ohmica}
+\begin{itemize}
+    \item $V_{GS} > V_T$
+    \item $V_{DS} < V_{OV} = V_{GS} - V_T$
+    \item $V_{GD} > V_T$
+\end{itemize}
+
+Corrente passante nel NMOS $\Rightarrow I_{DS} = \mu_nC'_{ox}\frac{W}{L}\left[\left(V_{GS}-V_T\right)V_{DS}-\frac{V_{DS}^2}{2}\right]$
+
+\subsection{Satura}
+\begin{itemize}
+    \item $V_{GS} > V_T$
+    \item $V_{DS} > V_{OV} = V_{GS} - V_T$
+    \item $V_{GD} < V_T$
+\end{itemize}
+
+Corrente passante nel NMOS $\Rightarrow I_{DS}=\frac{1}{2}\mu_nC'_{ox}\frac{W}{L}\left(V_{GS}-V_T\right)^2$
+
+\newpage
+\section{PMOS}
+$\mathbf{V_{SG} > \left|V_T\right| \Rightarrow ACCESO}$
+
+\subsection{Ohmica}
+\begin{itemize}
+    \item $V_{SG} > |V_T|$
+    \item $V_{SD} < V_{OV} = V_{SG} - |V_T|$
+    \item $V_{DG} > |V_T|$
+\end{itemize}
+
+Corrente passante nel NMOS $\Rightarrow I_{SD} = \mu_pC'_{ox}\frac{W}{L}\left[\left(V_{SG}-|V_T|\right)V_{SD}-\frac{V_{SD}^2}{2}\right]$
+
+\subsection{Satura}
+\begin{itemize}
+    \item $V_{SG} > |V_T|$
+    \item $V_{SD} > V_{OV} = V_{SG} - |V_T|$
+    \item $V_{DG} < |V_T|$
+\end{itemize}
+
+Corrente passante nel NMOS $\Rightarrow I_{DS}=\frac{1}{2}\mu_nC'_{ox}\frac{W}{L}\left(V_{SG}-|V_T|\right)^2$
+
+\end{document}

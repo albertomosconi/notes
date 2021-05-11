@@ -6,3 +6,4 @@ My notes from some of the courses at Politecnico di Milano.
 
 - [Bioinformatics Algorithms](./bioinformatics%20algorithms) - Prof. Giulio Pavesi
 - [Economia e Organizzazione Aziendale](./economia) - Prof. Massimiliano Guerini
+- [Fondamenti di Elettronica](./elettronica) - Prof. Nicola Lusardi
